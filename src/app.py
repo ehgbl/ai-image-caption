@@ -74,10 +74,18 @@ def run_upload_page():
         accept_multiple_files=True,
     )
     if not uploaded_files:
-        st.info("📁 Please upload at least one image.")
+        st.info("Please upload at least one image.")
         st.stop()
 
-    st.success(f"📂 Uploaded {len(uploaded_files)} image(s)")
+    st.success(f"Uploaded {len(uploaded_files)} image(s)")
+    for file in uploaded_files:
+        file_type= mimetypes.guess_type(file.name)[0] or "unknown"
+        if "image" in file_type:
+            st.write(f"- {file.name} ({file_type})")
+        else:
+            st.write(f"- {file.name} (not an image file)")
+            
+    
 
     mimetypes.add_type("image/jpeg", ".jpg")
     mimetypes.add_type("image/png", ".png")
